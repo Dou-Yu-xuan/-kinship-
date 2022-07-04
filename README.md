@@ -18,17 +18,18 @@ You can download the corresponding datasets by click the link.
 
 # Methods
 You can train relevant methods by running corresponding scripts:
-Training + Testing
+
+***Training + Testing***
 
 ```python
 python train_attention.py
 ```
-Training + Testing
+***Training + Testing***
 
 ```python
 python train_cnn.py
 ```
-Training + Testing
+***Training + Testing***
 
 ```python
 python train_deep_shallow.py
