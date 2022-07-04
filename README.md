@@ -17,4 +17,19 @@ You can download the corresponding datasets by click the link.
 [FIW](https://web.northeastern.edu/smilelab/fiw/)
 
 # Methods
+You can train relevant methods by running corresponding scripts:
+Training + Testing
 
+```python
+python train_attention.py
+```
+Training + Testing
+
+```python
+python train_cnn.py
+```
+Training + Testing
+
+```python
+python train_deep_shallow.py
+```
