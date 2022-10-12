@@ -38,5 +38,5 @@ python train_deep_shallow.py
 # data
 <center>
  <img src='img/img.png' >
- <figcaption> Architecture of our Joint Learning Network (JLNet)  </figcaption>
+ <figcaption> dataset  </figcaption>
 </center>
