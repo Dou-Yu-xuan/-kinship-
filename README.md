@@ -34,3 +34,9 @@ python train_cnn.py
 ```python
 python train_deep_shallow.py
 ```
+
+# data
+<center>
+ <img src='img/img.png' >
+ <figcaption> Architecture of our Joint Learning Network (JLNet)  </figcaption>
+</center>
