@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <title>UI</title>
+<head>
+    <script src="/static/jquery.min.js"></script>
+     <link rel="stylesheet" href="static/css/bootstrap.min.css" />
+     <style>
+         html, body {
+            width: 100%;
+            height: 100%;
+         }
+         
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .my-hero {
+        }
+        
+        .inner-container {
+            padding: 50px;
+            width: 50%;
+            flex-wrap: wrap;
+        }
+        
+        .inner-container .btn {
+            margin: 40px;
+        }
+        
+        .timer {
+            width: 100%;
+            font-size: 3rem;
+            text-align: center;
+        }
+        
+        .timer-min, .timer-sec, .timer-ms {
+            font-size: 6rem;
+            min-width: 7rem;
+            display: inline-block;
+            text-align: right;
+        }
+        
+        .timer-ms {
+            font-size: 3rem;
+        }
+        
+        .gray {
+            color: #cccccc;
+        }
+        
+        .flex-item:not(:first-child) {
+          flex: 1;
+        }
+
+        .flex-item:nth-child(1) {
+          width: 100%;
+        }
+        
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body class="my-hero flex-center">
+       
+    <div class="inner-container flex-center">
+        <p class="flex-item timer">
+            <span class="timer-min">0</span>m 
+            <span class="timer-sec">0</span>s 
+            <span class="timer-ms gray">0</span>
+        </p>
+        <button type="button" class="start-recording-button flex-item btn btn-primary btn-lg" onclick="startRecording()">Start Recording</button>
+        <button type="button" class="stop-recording-button hide flex-item btn btn-danger btn-lg" onclick="stopRecording()">Stop Recording</button>
+        
+        <button type="button" class="next-recording-button flex-item btn btn-secondary btn-lg" onclick="next()">Next section</button>
+    </div>
+
+    
+</body>
+<script type="text/javascript" charset="utf-8">
+    var isRecordingStarted = false
+    var timeStart = false
+    var timer = false;
+    
+    var minObj = $(".timer-min")
+    var secObj = $(".timer-sec")
+    var msObj = $(".timer-ms")
+    
+    function toggleStartStop() {
+        $('.start-recording-button').toggleClass('hide')
+        $('.stop-recording-button').toggleClass('hide')
+    }
+    
+    function timerTrigger (isStart) {
+        if (isStart) {
+            timer = setInterval(() => {
+                var msDiff = (new Date().getTime()) - timeStart.getTime()
+
+                var _min = 0
+                var _sec = 0
+                var _ms = 0
+                
+                _min = Math.floor(msDiff / (1000 * 60))
+                msDiff -= (_min * (1000 * 60))
+                
+                _sec = Math.floor(msDiff / 1000)
+                msDiff -= (_sec * 1000)
+                
+                _ms = msDiff
+                
+                minObj.text(_min)
+                secObj.text(_sec)
+                msObj.text(_ms)
+                
+            }, 100)   
+        } else {
+            clearInterval(timer)
+            timer = false
+        }
+    }
+
+    function startRecording() {
+        $.post("/start", function(data, status){
+            timeStart = new Date() // to reset the counter
+            toggleStartStop()
+            // start timer
+            
+        });
+    }
+    
+    function stopRecording() {
+        $.post("/stop", function(data, status){
+            timerTrigger(false)
+            minObj.text(0)
+            secObj.text(0)
+            msObj.text(0)
+            toggleStartStop()
+        });
+    }
+    
+    function next() {        
+        $.post("/next", function(data, status){
+            timeStart = new Date()  // to reset the counter
+            if (!timer) {
+                timerTrigger(true)
+            }
+        });
+    }
+</script>
+</script>
+</html>
